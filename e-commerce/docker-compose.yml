@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    image: poraoDev
+    restart: always
+    ports: 
+      - 3000:3000
+    volumes: 
+      - .:/app
+
+volumes:
+  pgdata:
+    driver: local
