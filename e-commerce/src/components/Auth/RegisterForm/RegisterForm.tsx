@@ -11,6 +11,7 @@ import {
   Link,
   VStack,
 } from "@chakra-ui/react";
+import { RegisterAPI } from "../../../utils/api/user";
 
 const RegisterForm = ({ showRegisterForm }) => {
   return (
@@ -23,9 +24,8 @@ const RegisterForm = ({ showRegisterForm }) => {
         password: "",
       }}
       validationSchema={ValidationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log("aq", values);
-        setSubmitting(false);
+      onSubmit={(values) => {
+        RegisterAPI(values);
       }}
     >
       {({
