@@ -1,20 +1,22 @@
 import React from "react";
 import { Formik } from "formik";
-import { ValidationSchema } from "../LoginForm/validation";
+import { ValidationSchema } from "./validation";
 
 import {
   Button,
   Checkbox,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
+  Link,
   VStack,
 } from "@chakra-ui/react";
 
 const LoginForm = ({ showLoginForm }) => {
   return (
     <Formik
-      initialValues={{ email: "", password: "", rememberMe: false }}
+      initialValues={{ email: "", password: "" }}
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -35,7 +37,7 @@ const LoginForm = ({ showLoginForm }) => {
       }) => (
         <form onSubmit={handleSubmit}>
           <VStack spacing={4} align="flex-start">
-            <FormControl>
+            <FormControl isInvalid={!!errors.email}>
               <FormLabel htmlFor="email">Email:</FormLabel>
               <Input
                 focusBorderColor="orange.500"
@@ -46,8 +48,11 @@ const LoginForm = ({ showLoginForm }) => {
                 onChange={handleChange}
                 value={values.email}
               />
+              <FormErrorMessage my={0} mx={1}>
+                {errors.email}
+              </FormErrorMessage>
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={!!errors.password}>
               <FormLabel htmlFor="password">Password:</FormLabel>
               <Input
                 focusBorderColor="orange.500"
@@ -58,18 +63,15 @@ const LoginForm = ({ showLoginForm }) => {
                 onChange={handleChange}
                 value={values.password}
               />
+              <FormErrorMessage my={0} mx={1} mb={4}>
+                {errors.password}
+              </FormErrorMessage>
+              <Link color="orange.500" href="#" fontSize="12px">
+                Não tem conta? Cadastre-se!
+              </Link>
             </FormControl>
-            <Checkbox
-              id="rememberMe"
-              name="rememberMe"
-              onChange={handleChange}
-              isChecked={values.rememberMe}
-              colorScheme="orange"
-            >
-              Remember me?
-            </Checkbox>
             <Button type="submit" colorScheme="orange" width="full">
-              Login
+              Fazer Login
             </Button>
           </VStack>
         </form>
