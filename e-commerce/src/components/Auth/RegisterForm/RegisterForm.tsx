@@ -38,7 +38,6 @@ const RegisterForm = ({ showRegisterForm }) => {
         isSubmitting,
         /* and other goodies */
       }) => {
-        console.log("errors", errors);
         return (
           <form onSubmit={handleSubmit}>
             <VStack spacing={4} align="flex-start">
