@@ -1,5 +1,5 @@
-import { Button, HStack, Icon, IconButton, Text } from "@chakra-ui/react";
-import { CgProfile } from "react-icons/cg";
+import { Button, HStack } from "@chakra-ui/react";
+import BasicModal from "../../BasicModal";
 
 const Menu = () => {
   return (
@@ -26,9 +26,8 @@ const Menu = () => {
           Demais Eletrônicos
         </Button>
       </HStack>
-      <Button color="whiteAlpha.700" variant='inline' leftIcon={<Icon as={CgProfile} fontSize="20px" mb="0.5"/>}>
-        Minha conta
-      </Button>
+
+      <BasicModal />
     </HStack>
   );
 };

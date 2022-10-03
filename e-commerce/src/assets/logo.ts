@@ -1,0 +1,1 @@
+export const LOGO = 'https://ecommerce-poraodev.s3.sa-east-1.amazonaws.com/porao_Dev_Logo_eb9ed8c1cd.png?updated_at=2022-10-03T12:13:12.047Z'
