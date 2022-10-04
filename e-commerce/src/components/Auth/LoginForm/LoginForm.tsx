@@ -13,7 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const LoginForm = ({ showLoginForm }) => {
+const LoginForm = ({ setShowLogin }) => {
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -28,12 +28,9 @@ const LoginForm = ({ showLoginForm }) => {
       {({
         values,
         errors,
-        touched,
         handleChange,
-        handleBlur,
         handleSubmit,
         isSubmitting,
-        /* and other goodies */
       }) => (
         <form onSubmit={handleSubmit}>
           <VStack spacing={4} align="flex-start">
@@ -66,11 +63,11 @@ const LoginForm = ({ showLoginForm }) => {
               <FormErrorMessage my={0} mx={1} mb={4}>
                 {errors.password}
               </FormErrorMessage>
-              <Link color="orange.500" href="#" fontSize="12px">
+              <Link onClick={() => setShowLogin(false)} color="orange.500" href="#" fontSize="12px">
                 Não tem conta? Cadastre-se!
               </Link>
             </FormControl>
-            <Button type="submit" colorScheme="orange" width="full">
+            <Button isLoading={isSubmitting} type="submit" colorScheme="orange" width="full">
               Fazer Login
             </Button>
           </VStack>

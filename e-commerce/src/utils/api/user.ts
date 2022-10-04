@@ -13,10 +13,9 @@ export const RegisterAPI = async (formData) => {
 
     const response = await axios.post(url, body, params)
     const result = await response.data
+    return result
 
-    console.log('Awqqqqq', result)
   } catch (error) {
-    console.log('Erro', error, 'and', error.message)
     return null
   }
 }

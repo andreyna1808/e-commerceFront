@@ -44,7 +44,7 @@ const BasicModal = () => {
           </ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody pb={6}>
-            <Auth />
+            <Auth onCloseModal={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

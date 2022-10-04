@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { RegisterAPI } from "../../../utils/api/user";
 
-const RegisterForm = ({ showRegisterForm }) => {
+const RegisterForm = ({ setShowLogin }) => {
   return (
     <Formik
       initialValues={{
@@ -24,19 +24,20 @@ const RegisterForm = ({ showRegisterForm }) => {
         password: "",
       }}
       validationSchema={ValidationSchema}
-      onSubmit={(values) => {
-        RegisterAPI(values);
+      onSubmit={async (values) => {
+        const response = await RegisterAPI(values);
+        console.log('aqqq', response)
+        if(response?.jwt){
+          setShowLogin(true)
+        }
       }}
     >
       {({
         values,
         errors,
-        touched,
         handleChange,
-        handleBlur,
         handleSubmit,
         isSubmitting,
-        /* and other goodies */
       }) => {
         return (
           <form onSubmit={handleSubmit}>
@@ -104,11 +105,11 @@ const RegisterForm = ({ showRegisterForm }) => {
                   value={values.password}
                 />
                 <FormErrorMessage my={0} mx={1} mb={4}>{errors.password}</FormErrorMessage>
-                <Link color="orange.500" href="#" fontSize="12px">
+                <Link onClick={() => setShowLogin(true)} color="orange.500" href="#" fontSize="12px">
                   Já tem conta? Faça login
                 </Link>
               </FormControl>
-              <Button type="submit" colorScheme="orange" width="full">
+              <Button isLoading={isSubmitting} type="submit" colorScheme="orange" width="full">
                 Fazer Registro
               </Button>
             </VStack>
