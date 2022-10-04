@@ -14,19 +14,29 @@ import {
 } from "@chakra-ui/react";
 import { LoginAPI } from "../../../utils/api/user";
 import { showToast } from "../../../utils/toastify";
+import useAuth from "../../../hooks/useAuth";
 
 const LoginForm = ({ onCloseModal, setShowLogin }) => {
+  const { login } = useAuth();
+
   return (
     <Formik
-      initialValues={{ username: '', password: "" }}
+      initialValues={{ username: "", password: "" }}
       validationSchema={ValidationSchema}
       onSubmit={async (values) => {
         const response = await LoginAPI(values);
-        if(response?.jwt){
-          showToast({ type: "success", message: "Usuário logado com sucesso!!" });
-          onCloseModal()
+        if (response?.jwt) {
+          showToast({
+            type: "success",
+            message: "Usuário logado com sucesso!!",
+          });
+          login(response.jwt)
+          onCloseModal();
         } else {
-          showToast({ type: "error", message: "Nome de usuário ou senha não correspondem" });
+          showToast({
+            type: "error",
+            message: "Nome de usuário ou senha não correspondem",
+          });
         }
       }}
     >
