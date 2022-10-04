@@ -12,6 +12,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { RegisterAPI } from "../../../utils/api/user";
+import { showToast } from "../../../utils/toastify";
 
 const RegisterForm = ({ setShowLogin }) => {
   return (
@@ -27,7 +28,10 @@ const RegisterForm = ({ setShowLogin }) => {
       onSubmit={async (values) => {
         const response = await RegisterAPI(values);
         if(response?.jwt){
+          showToast({ type: "success", message: "Usuário criado com sucesso!!" });
           setShowLogin(true)
+        } else {
+          showToast({ type: "error", message: "Problemas no servidor tente novamente mais tarde" });
         }
       }}
     >

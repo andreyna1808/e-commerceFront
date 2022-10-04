@@ -6,7 +6,7 @@ const Auth = (props) => {
   const { onCloseModal } = props;
   const [showLogin, setShowLogin] = useState(false);
 
-  return showLogin ? <LoginForm setShowLogin={setShowLogin} /> : <RegisterForm setShowLogin={setShowLogin}/>;
+  return showLogin ? <LoginForm setShowLogin={setShowLogin} onCloseModal={onCloseModal} /> : <RegisterForm setShowLogin={setShowLogin}/>;
 };
 
 export default Auth;

@@ -13,15 +13,21 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { LoginAPI } from "../../../utils/api/user";
+import { showToast } from "../../../utils/toastify";
 
-const LoginForm = ({ setShowLogin }) => {
+const LoginForm = ({ onCloseModal, setShowLogin }) => {
   return (
     <Formik
-      initialValues={{ username: '', email: "", password: "" }}
+      initialValues={{ username: '', password: "" }}
       validationSchema={ValidationSchema}
       onSubmit={async (values) => {
         const response = await LoginAPI(values);
-        console.log(response);
+        if(response?.jwt){
+          showToast({ type: "success", message: "Usuário logado com sucesso!!" });
+          onCloseModal()
+        } else {
+          showToast({ type: "error", message: "Nome de usuário ou senha não correspondem" });
+        }
       }}
     >
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -38,21 +44,6 @@ const LoginForm = ({ setShowLogin }) => {
                 onChange={handleChange}
                 value={values.username}
               />
-            </FormControl>
-            <FormControl isInvalid={!!errors.email}>
-              <FormLabel htmlFor="email">Email:</FormLabel>
-              <Input
-                focusBorderColor="orange.500"
-                id="email"
-                name="email"
-                type="email"
-                variant="filled"
-                onChange={handleChange}
-                value={values.email}
-              />
-              <FormErrorMessage my={0} mx={1}>
-                {errors.email}
-              </FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={!!errors.password}>
               <FormLabel htmlFor="password">Password:</FormLabel>
