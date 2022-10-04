@@ -17,7 +17,7 @@ const UserAccount = ({ setShowLogin, setIsLogin, onCloseModal }) => {
   }
 
   return (
-    <VStack>
+    <VStack mt="4">
       <Avatar size="2xl" name={dataUser?.username} src={dataUser?.img} />
       <Text>{dataUser?.username}</Text>
 

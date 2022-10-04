@@ -12,10 +12,13 @@ import {
 import React from "react";
 
 import { CgProfile } from "react-icons/cg";
+import { getToken, getUser } from "../../utils/api/token";
 import Auth from "../Auth";
 
 const BasicModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const token = getToken();
+  const dataUser = getUser();
 
   const initialRef = React.useRef(null);
 
@@ -28,7 +31,7 @@ const BasicModal = () => {
         leftIcon={<Icon as={CgProfile} fontSize="20px" mb="0.5" />}
         _hover={{ color: "orange.400" }}
       >
-        My account
+        {dataUser?.username || 'Fazer login/registro'}
       </Button>
 
       <Modal
@@ -40,7 +43,7 @@ const BasicModal = () => {
         <ModalOverlay backdropFilter="auto" backdropBlur="4px" />
         <ModalContent>
           <ModalHeader p="3" bg="orange.600" color="white">
-            Iniciar sessão
+            {token ? 'Meus Dados' : 'Iniciar sessão'}
           </ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody pb={6}>
