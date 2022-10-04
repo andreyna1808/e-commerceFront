@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { ValidationSchema } from "./validation";
 
 import {
+  Box,
   Button,
   Checkbox,
   FormControl,
@@ -30,7 +31,7 @@ const LoginForm = ({ onCloseModal, setShowLogin }) => {
             type: "success",
             message: "Usuário logado com sucesso!!",
           });
-          login(response.jwt)
+          login(response.jwt, response.user);
           onCloseModal();
         } else {
           showToast({
@@ -87,6 +88,9 @@ const LoginForm = ({ onCloseModal, setShowLogin }) => {
               Fazer Login
             </Button>
           </VStack>
+          <Box mt="4" display="flex" justifyContent="flex-end">
+            <Button onClick={onCloseModal}>Sair</Button>
+          </Box>
         </form>
       )}
     </Formik>

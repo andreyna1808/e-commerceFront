@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { ValidationSchema } from "./validation";
 
 import {
+  Box,
   Button,
   FormControl,
   FormErrorMessage,
@@ -14,7 +15,7 @@ import {
 import { RegisterAPI } from "../../../utils/api/user";
 import { showToast } from "../../../utils/toastify";
 
-const RegisterForm = ({ setShowLogin }) => {
+const RegisterForm = ({ setShowLogin, onCloseModal }) => {
   return (
     <Formik
       initialValues={{
@@ -27,21 +28,21 @@ const RegisterForm = ({ setShowLogin }) => {
       validationSchema={ValidationSchema}
       onSubmit={async (values) => {
         const response = await RegisterAPI(values);
-        if(response?.jwt){
-          showToast({ type: "success", message: "Usuário criado com sucesso!!" });
-          setShowLogin(true)
+        if (response?.jwt) {
+          showToast({
+            type: "success",
+            message: "Usuário criado com sucesso!!",
+          });
+          setShowLogin(true);
         } else {
-          showToast({ type: "error", message: "Problemas no servidor tente novamente mais tarde" });
+          showToast({
+            type: "error",
+            message: "Problemas no servidor tente novamente mais tarde",
+          });
         }
       }}
     >
-      {({
-        values,
-        errors,
-        handleChange,
-        handleSubmit,
-        isSubmitting,
-      }) => {
+      {({ values, errors, handleChange, handleSubmit, isSubmitting }) => {
         return (
           <form onSubmit={handleSubmit}>
             <VStack spacing={4} align="flex-start">
@@ -56,7 +57,9 @@ const RegisterForm = ({ setShowLogin }) => {
                   onChange={handleChange}
                   value={values.name}
                 />
-                <FormErrorMessage my={0} mx={1}>{errors.name}</FormErrorMessage>
+                <FormErrorMessage my={0} mx={1}>
+                  {errors.name}
+                </FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors.lastName}>
                 <FormLabel htmlFor="lastName">Last Name:</FormLabel>
@@ -69,7 +72,9 @@ const RegisterForm = ({ setShowLogin }) => {
                   onChange={handleChange}
                   value={values.lastName}
                 />
-                <FormErrorMessage my={0} mx={1}>{errors.lastName}</FormErrorMessage>
+                <FormErrorMessage my={0} mx={1}>
+                  {errors.lastName}
+                </FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors.username}>
                 <FormLabel htmlFor="username">username:</FormLabel>
@@ -81,7 +86,9 @@ const RegisterForm = ({ setShowLogin }) => {
                   onChange={handleChange}
                   value={values.username}
                 />
-                <FormErrorMessage my={0} mx={1}>{errors.username}</FormErrorMessage>
+                <FormErrorMessage my={0} mx={1}>
+                  {errors.username}
+                </FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors.email}>
                 <FormLabel htmlFor="email">Email:</FormLabel>
@@ -94,7 +101,9 @@ const RegisterForm = ({ setShowLogin }) => {
                   onChange={handleChange}
                   value={values.email}
                 />
-                <FormErrorMessage my={0} mx={1}>{errors.email}</FormErrorMessage>
+                <FormErrorMessage my={0} mx={1}>
+                  {errors.email}
+                </FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors.password}>
                 <FormLabel htmlFor="password">Password:</FormLabel>
@@ -107,15 +116,30 @@ const RegisterForm = ({ setShowLogin }) => {
                   onChange={handleChange}
                   value={values.password}
                 />
-                <FormErrorMessage my={0} mx={1} mb={4}>{errors.password}</FormErrorMessage>
-                <Link onClick={() => setShowLogin(true)} color="orange.500" href="#" fontSize="12px">
+                <FormErrorMessage my={0} mx={1} mb={4}>
+                  {errors.password}
+                </FormErrorMessage>
+                <Link
+                  onClick={() => setShowLogin(true)}
+                  color="orange.500"
+                  href="#"
+                  fontSize="12px"
+                >
                   Já tem conta? Faça login
                 </Link>
               </FormControl>
-              <Button isLoading={isSubmitting} type="submit" colorScheme="orange" width="full">
+              <Button
+                isLoading={isSubmitting}
+                type="submit"
+                colorScheme="orange"
+                width="full"
+              >
                 Fazer Registro
               </Button>
             </VStack>
+            <Box mt="4" display="flex" justifyContent="flex-end">
+              <Button onClick={onCloseModal}>Sair</Button>
+            </Box>
           </form>
         );
       }}
