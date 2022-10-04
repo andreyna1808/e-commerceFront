@@ -26,7 +26,6 @@ const RegisterForm = ({ setShowLogin }) => {
       validationSchema={ValidationSchema}
       onSubmit={async (values) => {
         const response = await RegisterAPI(values);
-        console.log('aqqq', response)
         if(response?.jwt){
           setShowLogin(true)
         }

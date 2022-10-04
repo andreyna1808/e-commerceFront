@@ -12,28 +12,33 @@ import {
   Link,
   VStack,
 } from "@chakra-ui/react";
+import { LoginAPI } from "../../../utils/api/user";
 
 const LoginForm = ({ setShowLogin }) => {
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{ username: '', email: "", password: "" }}
       validationSchema={ValidationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+      onSubmit={async (values) => {
+        const response = await LoginAPI(values);
+        console.log(response);
       }}
     >
-      {({
-        values,
-        errors,
-        handleChange,
-        handleSubmit,
-        isSubmitting,
-      }) => (
+      {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
         <form onSubmit={handleSubmit}>
           <VStack spacing={4} align="flex-start">
+            <FormControl>
+              <FormLabel htmlFor="username">Username:</FormLabel>
+              <Input
+                focusBorderColor="orange.500"
+                id="username"
+                name="username"
+                type="username"
+                variant="filled"
+                onChange={handleChange}
+                value={values.username}
+              />
+            </FormControl>
             <FormControl isInvalid={!!errors.email}>
               <FormLabel htmlFor="email">Email:</FormLabel>
               <Input
@@ -63,11 +68,21 @@ const LoginForm = ({ setShowLogin }) => {
               <FormErrorMessage my={0} mx={1} mb={4}>
                 {errors.password}
               </FormErrorMessage>
-              <Link onClick={() => setShowLogin(false)} color="orange.500" href="#" fontSize="12px">
+              <Link
+                onClick={() => setShowLogin(false)}
+                color="orange.500"
+                href="#"
+                fontSize="12px"
+              >
                 Não tem conta? Cadastre-se!
               </Link>
             </FormControl>
-            <Button isLoading={isSubmitting} type="submit" colorScheme="orange" width="full">
+            <Button
+              isLoading={isSubmitting}
+              type="submit"
+              colorScheme="orange"
+              width="full"
+            >
               Fazer Login
             </Button>
           </VStack>

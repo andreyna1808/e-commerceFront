@@ -19,3 +19,25 @@ export const RegisterAPI = async (formData) => {
     return null
   }
 }
+
+export const LoginAPI = async (formData) => {
+  console.log('Aq', formData)
+  try {
+    const url = `${BASE_URL}/api/auth/local`
+    const body = {...formData, identifier: formData.username}
+    const params = {
+      headers: {
+        "Content-Type": 'application/json'
+      },
+    };
+
+    const response = await axios.post(url, body, params)
+    const result = await response.data
+    console.log('result', result)
+    return result
+
+  } catch (error) {
+    console.log('Erro', error, 'and', error.message)
+    return null
+  }
+}
