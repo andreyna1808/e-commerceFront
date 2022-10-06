@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import { getToken } from "../../utils/api/token";
 import ForgotPassword from "./ForgotPassword";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import UserAccount from "./UserAccount";
 
 const Auth = (props) => {
-  const { onCloseModal } = props;
+  const { onCloseModal, token } = props;
   const [modalType, setShowModalType] = useState("login");
 
   useEffect(() => {
-    const token = getToken();
     if (token) {
       setShowModalType("logged");
     }
-  }, [modalType]);
+  }, [modalType, token]);
 
   const verifyModal = () => {
     switch (modalType) {

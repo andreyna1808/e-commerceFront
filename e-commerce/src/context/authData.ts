@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react"
-import { setToken, setUser } from "../utils/api/token"
+import { deleteToken, deleteUser, setToken, setUser } from "../utils/api/token"
 
 const AuthData = () => {
   const [auth, setAuth] = useState(undefined)
@@ -13,11 +13,17 @@ const AuthData = () => {
     })
   }
 
+  const logout = () => {
+    deleteToken()
+    deleteUser()
+    setAuth(null)
+  }
+
   const authData = useMemo(
     () => ({
       auth,
       login,
-      logout: () => null,
+      logout,
     }),
     [auth]
   );

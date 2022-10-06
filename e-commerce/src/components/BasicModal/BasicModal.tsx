@@ -12,14 +12,25 @@ import {
 import React, { useEffect, useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
-import { getToken, getUser } from "../../utils/api/token";
+import useAuth from "../../hooks/useAuth";
+import { getToken, getUser, HasExpiredToken } from "../../utils/api/token";
 import Auth from "../Auth";
 
 const BasicModal = () => {
+  const { logout } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [localStorage, setLocalStorage] = useState(null);
+
   const dataUser = localStorage?.user ? getUser() : null
   const token = localStorage?.token ? getToken() : null
+
+  const hasExpiredToken = () => {
+    if(token !== null && HasExpiredToken(token)){
+      logout()
+    } else {
+      return token
+    }
+  }
 
   const initialRef = React.useRef(null);
 
@@ -48,11 +59,11 @@ const BasicModal = () => {
         <ModalOverlay backdropFilter="auto" backdropBlur="4px" />
         <ModalContent>
           <ModalHeader p="3" bg="orange.600" color="white">
-            {token ? "Meus Dados" : "Iniciar sessão"}
+            {hasExpiredToken() ? "Meus Dados" : "Iniciar sessão"}
           </ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody pb={6}>
-            <Auth onCloseModal={onClose} />
+            <Auth onCloseModal={onClose} token={hasExpiredToken()}/>
           </ModalBody>
         </ModalContent>
       </Modal>

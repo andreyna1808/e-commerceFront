@@ -1,18 +1,18 @@
-import { Avatar, Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Box, Button, Text, VStack } from "@chakra-ui/react";
 import React from "react";
-import { deleteToken, deleteUser, getUser } from "../../../utils/api/token";
+import { getUser } from "../../../utils/api/token";
 import { format } from "date-fns";
+import useAuth from "../../../hooks/useAuth";
 
 const UserAccount = ({ setShowModalType, onCloseModal }) => {
+  const { logout } = useAuth();
   const dataUser = getUser();
 
-  const dateFormated = format(new Date(dataUser?.createdAt), "dd/MM/yyyy");
+  const dateFormated = dataUser ? format(new Date(dataUser?.createdAt), "dd/MM/yyyy") : null;
 
   const onLogout = () => {
-    deleteUser()
-    deleteToken()
+    logout()
     setShowModalType('login');
-    onCloseModal
   }
 
   return (
