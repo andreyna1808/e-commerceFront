@@ -1,4 +1,4 @@
-import { Button, HStack } from "@chakra-ui/react";
+import { Box, Button, HStack } from "@chakra-ui/react";
 import BasicModal from "../../BasicModal";
 
 const Menu = () => {
@@ -9,12 +9,9 @@ const Menu = () => {
       p={3}
       justifyContent="space-between"
     >
-      <HStack>
+      <Box w="full" display="flex" justifyContent="space-between" mr={6}>
         <Button color="whiteAlpha.700" variant="link">
           Computadores
-        </Button>
-        <Button color="whiteAlpha.700" variant="link">
-          Notebooks
         </Button>
         <Button color="whiteAlpha.700" variant="link">
           Monitores
@@ -25,7 +22,7 @@ const Menu = () => {
         <Button color="whiteAlpha.700" variant="link">
           Demais Eletrônicos
         </Button>
-      </HStack>
+      </Box>
 
       <BasicModal />
     </HStack>
