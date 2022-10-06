@@ -9,7 +9,7 @@ import {
   useDisclosure,
   Icon,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
 import { getToken, getUser } from "../../utils/api/token";
@@ -17,10 +17,15 @@ import Auth from "../Auth";
 
 const BasicModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const token = getToken();
-  const dataUser = getUser();
+  const [localStorage, setLocalStorage] = useState(null);
+  const dataUser = localStorage?.user ? getUser() : null
+  const token = localStorage?.token ? getToken() : null
 
   const initialRef = React.useRef(null);
+
+  useEffect(() => {
+    setLocalStorage(window?.localStorage);
+  }, [localStorage]);
 
   return (
     <>
@@ -31,7 +36,7 @@ const BasicModal = () => {
         leftIcon={<Icon as={CgProfile} fontSize="20px" mb="0.5" />}
         _hover={{ color: "orange.400" }}
       >
-        {dataUser?.username || 'Fazer login/registro'}
+        {dataUser?.username || "Fazer login/registro"}
       </Button>
 
       <Modal
@@ -43,7 +48,7 @@ const BasicModal = () => {
         <ModalOverlay backdropFilter="auto" backdropBlur="4px" />
         <ModalContent>
           <ModalHeader p="3" bg="orange.600" color="white">
-            {token ? 'Meus Dados' : 'Iniciar sessão'}
+            {token ? "Meus Dados" : "Iniciar sessão"}
           </ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody pb={6}>
