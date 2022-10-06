@@ -6,7 +6,7 @@ import UserAccount from "./UserAccount";
 
 const Auth = (props) => {
   const { onCloseModal } = props;
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
