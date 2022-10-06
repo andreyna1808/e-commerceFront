@@ -1,19 +1,29 @@
 import { Avatar, Box, Button, Text, VStack } from "@chakra-ui/react";
-import React from "react";
-import { getUser } from "../../../utils/api/token";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import useAuth from "../../../hooks/useAuth";
+import { GetMeAPI } from "../../../utils/api/user";
 
 const UserAccount = ({ setShowModalType, onCloseModal }) => {
   const { logout } = useAuth();
-  const dataUser = getUser();
 
-  const dateFormated = dataUser ? format(new Date(dataUser?.createdAt), "dd/MM/yyyy") : null;
+  const [dataUser, setDataUser] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const response = await GetMeAPI(logout);
+      setDataUser(response);
+    })();
+  }, [logout]);
+
+  const dateFormated = dataUser
+    ? format(new Date(dataUser?.createdAt), "dd/MM/yyyy")
+    : null;
 
   const onLogout = () => {
-    logout()
-    setShowModalType('login');
-  }
+    logout();
+    setShowModalType("login");
+  };
 
   return (
     <VStack mt="4">
@@ -30,7 +40,9 @@ const UserAccount = ({ setShowModalType, onCloseModal }) => {
       </Box>
 
       <Box w="100%" mt="4" display="flex" justifyContent="flex-end">
-        <Button color="white" mr="2" bg="orange.500" onClick={onLogout}>Logout</Button>
+        <Button color="white" mr="2" bg="orange.500" onClick={onLogout}>
+          Logout
+        </Button>
         <Button onClick={onCloseModal}>Sair</Button>
       </Box>
     </VStack>

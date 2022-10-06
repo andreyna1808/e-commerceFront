@@ -32,16 +32,3 @@ export const getToken = () => {
 export const deleteToken = () => {
   return localStorage.removeItem(TOKEN)
 }
-
-// USER
-export const setUser = (user) => {
-  localStorage.setItem(USER, user)
-}
-
-export const getUser = () => {
-  return JSON.parse(localStorage.getItem(USER))
-}
-
-export const deleteUser = () => {
-  return localStorage.removeItem(USER)
-}

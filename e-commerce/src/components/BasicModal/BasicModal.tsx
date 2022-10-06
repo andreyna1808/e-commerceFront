@@ -13,33 +13,25 @@ import React, { useEffect, useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
 import useAuth from "../../hooks/useAuth";
-import { getToken, getUser, HasExpiredToken } from "../../utils/api/token";
+import { GetMeAPI } from "../../utils/api/user";
 import Auth from "../Auth";
 
 const BasicModal = () => {
-  const { logout } = useAuth();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [localStorage, setLocalStorage] = useState(null);
-
-  const dataUser = localStorage?.user ? getUser() : null
-  const token = localStorage?.token ? getToken() : null
-
-  const hasExpiredToken = () => {
-    if(token !== null && HasExpiredToken(token)){
-      logout()
-    } else {
-      return token
-    }
-  }
-
   const initialRef = React.useRef(null);
 
+  const { logout } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [dataUser, setDataUser] = useState(null);
+
   useEffect(() => {
-    setLocalStorage(window?.localStorage);
-  }, [localStorage]);
+    (async () => {
+      const response = await GetMeAPI(logout);
+      setDataUser(response);
+    })();
+  }, [logout]);
 
   return (
-    <>
+    <React.Fragment>
       <Button
         onClick={onOpen}
         color="whiteAlpha.700"
@@ -59,15 +51,15 @@ const BasicModal = () => {
         <ModalOverlay backdropFilter="auto" backdropBlur="4px" />
         <ModalContent>
           <ModalHeader p="3" bg="orange.600" color="white">
-            {hasExpiredToken() ? "Meus Dados" : "Iniciar sessão"}
+            {dataUser ? "Meus Dados" : "Iniciar sessão"}
           </ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody pb={6}>
-            <Auth onCloseModal={onClose} token={hasExpiredToken()}/>
+            <Auth onCloseModal={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </React.Fragment>
   );
 };
 

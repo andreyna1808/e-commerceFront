@@ -1,21 +1,16 @@
 import React, { useMemo, useState } from "react"
-import { deleteToken, deleteUser, setToken, setUser } from "../utils/api/token"
+import { deleteToken, setToken } from "../utils/api/token"
 
 const AuthData = () => {
   const [auth, setAuth] = useState(undefined)
 
-  const login = (token, user) => {
+  const login = (token) => {
     setToken(token)
-    setUser(JSON.stringify(user))
-    setAuth({
-      token,
-      user,
-    })
+    setAuth(token)
   }
 
   const logout = () => {
     deleteToken()
-    deleteUser()
     setAuth(null)
   }
 
@@ -27,7 +22,7 @@ const AuthData = () => {
     }),
     [auth]
   );
-  
+
   return authData
 }
 

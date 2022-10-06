@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../constants"
+import { FetchAuth } from "../fetchAuth";
 
 export const RegisterAPI = async (formData) => {
   try {
@@ -53,6 +54,19 @@ export const ResetPasswordAPI = async (formData) => {
     return result
 
   } catch (error) {
+    return null
+  }
+}
+
+export const GetMeAPI = async (logout) => {
+  try {
+    const url = `${BASE_URL}/api/users/me`
+    const result = await FetchAuth(url ,logout)
+    console.log('Aqqq', result)
+    return result
+
+  } catch (error) {
+    console.log('error', error)
     return null
   }
 }

@@ -31,7 +31,7 @@ const LoginForm = ({ onCloseModal, setShowModalType }) => {
             type: "success",
             message: "Usuário logado com sucesso!!",
           });
-          login(response.jwt, response.user);
+          login(response.jwt);
           onCloseModal();
         } else {
           showToast({
