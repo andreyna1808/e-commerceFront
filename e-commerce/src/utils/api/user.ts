@@ -38,3 +38,21 @@ export const LoginAPI = async (formData) => {
     return null
   }
 }
+
+export const ResetPasswordAPI = async (formData) => {
+  try {
+    const url = `${BASE_URL}/api/auth/forgot-password`
+    const body = JSON.stringify(formData)
+    const params = {
+      headers: {
+        "Content-Type": 'application/json'
+      },
+    };
+    const response = await axios.post(url, body, params)
+    const result = await response.data
+    return result
+
+  } catch (error) {
+    return null
+  }
+}

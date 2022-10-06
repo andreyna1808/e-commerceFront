@@ -17,7 +17,7 @@ import { LoginAPI } from "../../../utils/api/user";
 import { showToast } from "../../../utils/toastify";
 import useAuth from "../../../hooks/useAuth";
 
-const LoginForm = ({ onCloseModal, setShowLogin }) => {
+const LoginForm = ({ onCloseModal, setShowModalType }) => {
   const { login } = useAuth();
 
   return (
@@ -70,14 +70,14 @@ const LoginForm = ({ onCloseModal, setShowLogin }) => {
               <FormErrorMessage my={0} mx={1} mb={4}>
                 {errors.password}
               </FormErrorMessage>
-              <Link
-                onClick={() => setShowLogin(false)}
+              <Button
+                onClick={() => setShowModalType('forgotPassword')}
                 color="orange.500"
-                href="#"
                 fontSize="12px"
+                variant='link'
               >
-                Não tem conta? Cadastre-se!
-              </Link>
+                Esqueceu sua senha? Recupere
+              </Button>
             </FormControl>
             <Button
               isLoading={isSubmitting}
@@ -86,6 +86,14 @@ const LoginForm = ({ onCloseModal, setShowLogin }) => {
               width="full"
             >
               Fazer Login
+            </Button>
+            <Button
+              onClick={() => setShowModalType('register')}
+              color="orange.500"
+              fontSize="12px"
+              width="full"
+            >
+              Não tem conta? Cadastre-se!
             </Button>
           </VStack>
           <Box mt="4" display="flex" justifyContent="flex-end">

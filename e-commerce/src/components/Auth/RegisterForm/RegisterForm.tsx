@@ -15,7 +15,7 @@ import {
 import { RegisterAPI } from "../../../utils/api/user";
 import { showToast } from "../../../utils/toastify";
 
-const RegisterForm = ({ setShowLogin, onCloseModal }) => {
+const RegisterForm = ({ setShowModalType, onCloseModal }) => {
   return (
     <Formik
       initialValues={{
@@ -33,7 +33,7 @@ const RegisterForm = ({ setShowLogin, onCloseModal }) => {
             type: "success",
             message: "Usuário criado com sucesso!!",
           });
-          setShowLogin(true);
+          setShowModalType("login");
         } else {
           showToast({
             type: "error",
@@ -119,14 +119,6 @@ const RegisterForm = ({ setShowLogin, onCloseModal }) => {
                 <FormErrorMessage my={0} mx={1} mb={4}>
                   {errors.password}
                 </FormErrorMessage>
-                <Link
-                  onClick={() => setShowLogin(true)}
-                  color="orange.500"
-                  href="#"
-                  fontSize="12px"
-                >
-                  Já tem conta? Faça login
-                </Link>
               </FormControl>
               <Button
                 isLoading={isSubmitting}
@@ -135,6 +127,14 @@ const RegisterForm = ({ setShowLogin, onCloseModal }) => {
                 width="full"
               >
                 Fazer Registro
+              </Button>
+              <Button
+                onClick={() => setShowModalType("login")}
+                color="orange.500"
+                fontSize="12px"
+                width="full"
+              >
+                Já tem conta? Faça login
               </Button>
             </VStack>
             <Box mt="4" display="flex" justifyContent="flex-end">

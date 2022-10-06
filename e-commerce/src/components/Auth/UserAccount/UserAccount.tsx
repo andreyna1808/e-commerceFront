@@ -3,7 +3,7 @@ import React from "react";
 import { deleteToken, deleteUser, getUser } from "../../../utils/api/token";
 import { format } from "date-fns";
 
-const UserAccount = ({ setShowLogin, setIsLogin, onCloseModal }) => {
+const UserAccount = ({ setShowModalType, onCloseModal }) => {
   const dataUser = getUser();
 
   const dateFormated = format(new Date(dataUser?.createdAt), "dd/MM/yyyy");
@@ -11,8 +11,7 @@ const UserAccount = ({ setShowLogin, setIsLogin, onCloseModal }) => {
   const onLogout = () => {
     deleteUser()
     deleteToken()
-    setIsLogin(false)
-    setShowLogin(true);
+    setShowModalType('login');
     onCloseModal
   }
 

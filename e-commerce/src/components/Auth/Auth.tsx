@@ -1,34 +1,53 @@
 import { useEffect, useState } from "react";
 import { getToken } from "../../utils/api/token";
+import ForgotPassword from "./ForgotPassword";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import UserAccount from "./UserAccount";
 
 const Auth = (props) => {
   const { onCloseModal } = props;
-  const [showLogin, setShowLogin] = useState(true);
-  const [isLogin, setIsLogin] = useState(false);
+  const [modalType, setShowModalType] = useState("login");
 
   useEffect(() => {
     const token = getToken();
     if (token) {
-      setIsLogin(true);
+      setShowModalType("logged");
     }
-  }, [isLogin]);
+  }, [modalType]);
 
   const verifyModal = () => {
-    if (isLogin) {
-      return (
-        <UserAccount setShowLogin={setShowLogin} setIsLogin={setIsLogin} onCloseModal={onCloseModal} />
-      );
-    } else if (showLogin) {
-      return (
-        <LoginForm setShowLogin={setShowLogin} onCloseModal={onCloseModal} />
-      );
-    } else {
-      return (
-        <RegisterForm setShowLogin={setShowLogin} onCloseModal={onCloseModal} />
-      );
+    switch (modalType) {
+      case "login":
+        return (
+          <LoginForm
+            setShowModalType={setShowModalType}
+            onCloseModal={onCloseModal}
+          />
+        );
+      case "register":
+        return (
+          <RegisterForm
+            setShowModalType={setShowModalType}
+            onCloseModal={onCloseModal}
+          />
+        );
+      case "logged":
+        return (
+          <UserAccount
+            setShowModalType={setShowModalType}
+            onCloseModal={onCloseModal}
+          />
+        );
+      case "forgotPassword":
+        return (
+          <ForgotPassword
+            setShowModalType={setShowModalType}
+            onCloseModal={onCloseModal}
+          />
+        );
+      default:
+        break;
     }
   };
 
