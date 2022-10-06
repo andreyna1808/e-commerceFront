@@ -62,11 +62,9 @@ export const GetMeAPI = async (logout) => {
   try {
     const url = `${BASE_URL}/api/users/me`
     const result = await FetchAuth(url ,logout)
-    console.log('Aqqq', result)
     return result
 
   } catch (error) {
-    console.log('error', error)
     return null
   }
 }
